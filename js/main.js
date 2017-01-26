@@ -14,10 +14,9 @@ jQuery(function($) {'use strict',
 		$(quotesCarousel).carousel({
 			interval: 2000
 		});
+
+		loadResultCharts();
 	});
-
-	
-
 
 	// accordian
 	$('.accordion-toggle').on('click', function(){
@@ -130,6 +129,112 @@ jQuery(function($) {'use strict',
 	}
 });
 
+function loadResultCharts(){
 
+	loadBarChart();
+	loadPieChart();
+	
+}
+
+function loadBarChart(){
+	var ctx = document.getElementById("myBarChart").getContext("2d");
+
+	var chartData = getBarChartData();
+
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: chartData.labels,
+	        datasets: [{
+	            label: 'Time taken to answer (in seconds)',
+	            data: chartData.data,
+	            backgroundColor: chartData.backgroundColor,
+	            borderColor: chartData.borderColor,
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
+function loadPieChart(){
+	var ctx = document.getElementById("myPieChart").getContext("2d");
+
+	var chartData = getPieChartData();
+
+	var myPieChart = new Chart(ctx,{
+	    type: 'pie',
+	    data: chartData
+	});
+}
+
+function getPieChartData(){
+	return {
+	    labels: [
+	        "<50%",
+	        "50-65%",
+	        "66-75%",
+	        "76-90%",
+	        ">90%",
+	    ],
+	    datasets: [
+	        {
+	            data: [40, 180, 200, 100, 10],
+	            backgroundColor: [
+		            "#FFCE56",
+		            "#FF6384",
+		            
+		            "#36A2EB",
+		            "#4BC0C0",
+		            "#E7E9ED"
+	            ],
+	            hoverBackgroundColor: [
+		            "#FFCE56",
+		            "#FF6384",
+		            "#36A2EB",
+		            "#4BC0C0",
+		            "#E7E9ED",
+	            ]
+	        }]
+	};
+
+}
+
+function getBarChartData(){
+	var labels =  ["0-15", "16-30", "31-45", "46-60", "More than 60"]
+	var data = [10, 50, 200, 150, 100];
+
+	var backgroundColor = [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ];
+	var borderColor = [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ];
+
+	return {
+		'labels' : labels,
+		'data' : data,
+		'backgroundColor': backgroundColor,
+		'borderColor': borderColor
+	}
+}
 
 
